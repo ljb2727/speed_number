@@ -1,0 +1,28 @@
+.tile_list {
+    overflow: hidden;
+    border-bottom: 1px solid #333;
+}
+
+.tile_list>.tile {
+    float: left;
+    width: 20vw;
+    height: 20vw;
+    text-align: center;
+
+}
+
+.tile_list>.tile>.inner {
+    border: 1px solid #333;
+    border-width: 1px 1px 0 0;
+    line-height: 20vw;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+div {
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
