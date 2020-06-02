@@ -24,7 +24,12 @@ class Message extends Component {
         }
     };
     render() {
-        return <div>{this.game_state()}</div>;
+        return (
+            <div>
+                <p>타ㅓ임</p>
+                <div>{this.game_state()}</div>
+            </div>
+        );
     }
 }
 

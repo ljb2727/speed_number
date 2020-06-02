@@ -1,6 +1,7 @@
 .tile_list {
     overflow: hidden;
     border-bottom: 1px solid #333;
+    background-color: gray
 }
 
 .tile_list>.tile {
