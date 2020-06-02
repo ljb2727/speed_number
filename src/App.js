@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import Template from "./components/Template";
 import TileList from "./components/TileList";
 import Button from "./components/Button";
+import Message from "./components/Message";
 
 class App extends Component {
     max = 25;
-    start_num = 1;
     state = {
         next_num: this.max,
         random_array: [],
         current_num: 1,
+        target_num: 0,
     };
     handleMakeRandom = () => {
         this.setState({
@@ -20,11 +21,15 @@ class App extends Component {
                 .map((e) => {
                     return { id: e, check: false };
                 }),
+            target_num: 0,
+            current_num: 1,
         });
     };
     handleClick = (t) => {
-        const { random_array } = this.state;
-        if (this.start_num == t) {
+        const { random_array, target_num, current_num } = this.state;
+        this.setState({ target_num: t });
+
+        if (current_num == t) {
             console.log("true");
             const index = random_array.findIndex((i) => i.id == t);
             const selected = random_array[index];
@@ -34,10 +39,11 @@ class App extends Component {
                 ...selected,
                 check: !selected.check,
             };
+            //this.start_num = this.start_num + 1;
             this.setState({
                 random_array: next_array,
+                current_num: this.state.current_num + 1,
             });
-            this.start_num = this.start_num + 1;
         } else {
             console.log("false");
         }
@@ -46,7 +52,7 @@ class App extends Component {
         this.handleMakeRandom();
     }
     render() {
-        const { random_array } = this.state;
+        const { random_array, target_num, current_num } = this.state;
         const { handleMakeRandom, handleClick } = this;
         return (
             <Template
@@ -54,6 +60,13 @@ class App extends Component {
                     <TileList array={random_array} onClick={handleClick} />
                 }
                 button={<Button onCreate={handleMakeRandom} />}
+                message={
+                    <Message
+                        target_num={target_num}
+                        current_num={current_num}
+                        max={this.max}
+                    />
+                }
             ></Template>
         );
     }
