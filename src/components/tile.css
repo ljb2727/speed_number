@@ -1,7 +1,6 @@
 .tile_list {
     overflow: hidden;
     border-bottom: 1px solid #333;
-    max-width: 360px;
 }
 
 .tile_list>.tile {

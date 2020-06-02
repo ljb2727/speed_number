@@ -24,17 +24,7 @@ class Message extends Component {
         }
     };
     render() {
-        return (
-            <div>
-                {/* {current_num - 1 === max && <div style={textStyle}>clear</div>}
-                {current_num - 1 !== target_num && (
-                    <div style={textStyle}>
-                        {target_num}은 올바른 숫자가 아닙니다.
-                    </div>
-                )} */}
-                {this.game_state()}
-            </div>
-        );
+        return <div>{this.game_state()}</div>;
     }
 }
 
