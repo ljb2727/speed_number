@@ -1,6 +1,7 @@
 .tile_list {
     overflow: hidden;
     border-bottom: 1px solid #333;
+    max-width: 360px;
 }
 
 .tile_list>.tile {
@@ -8,7 +9,15 @@
     width: 20vw;
     height: 20vw;
     text-align: center;
+    transition: 0.2s
+}
 
+.tile_list>.tile.on {
+    background-color: black;
+}
+
+.tile_list>.tile:nth-child(5n+1)>.inner {
+    border-left: 1px solid #333;
 }
 
 .tile_list>.tile>.inner {

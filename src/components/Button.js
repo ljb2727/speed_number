@@ -8,7 +8,7 @@ const Button = ({ onCreate }) => {
                     onCreate();
                 }}
             >
-                button
+                resset
             </button>
         </div>
     );

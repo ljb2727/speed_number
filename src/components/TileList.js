@@ -1,22 +1,26 @@
 import React from "react";
 import "./tile.css";
 
-const Tile = ({ text }) => {
+const Tile = ({ text, check, onClick }) => {
     return (
-        <div className="tile">
-            <div className="inner">{text}</div>
+        <div className={`tile ${check && "on"}`}>
+            <div
+                className="inner"
+                onClick={() => {
+                    onClick(text);
+                }}
+            >
+                {text}
+            </div>
         </div>
     );
 };
 
-const TileList = ({ next_number }) => {
-    const random_array = new Array(next_number)
-        .fill("")
-        .map((v, i) => i)
-        .sort(() => Math.random() - Math.random())
-        .map((v, i) => <Tile text={v + 1} key={i} />);
-
-    return <div className="tile_list">{random_array}</div>;
+const TileList = ({ onClick, array }) => {
+    const array_list = array.map((e) => (
+        <Tile text={e.id} key={e.id} check={e.check} onClick={onClick} />
+    ));
+    return <div className="tile_list">{array_list}</div>;
 };
 
 export default TileList;

@@ -5,27 +5,54 @@ import Button from "./components/Button";
 
 class App extends Component {
     max = 25;
+    start_num = 1;
     state = {
-        next_number: this.max,
+        next_num: this.max,
         random_array: [],
+        current_num: 1,
     };
-    handleMakeRandom = (tt) => {
+    handleMakeRandom = () => {
         this.setState({
             random_array: new Array(this.max)
                 .fill("")
                 .map((v, i) => i + 1)
-                .sort(() => Math.random() - Math.random()),
+                .sort(() => Math.random() - Math.random())
+                .map((e) => {
+                    return { id: e, check: false };
+                }),
         });
+    };
+    handleClick = (t) => {
+        const { random_array } = this.state;
+        if (this.start_num == t) {
+            console.log("true");
+            const index = random_array.findIndex((i) => i.id == t);
+            const selected = random_array[index];
+            const next_array = [...random_array];
+
+            next_array[index] = {
+                ...selected,
+                check: !selected.check,
+            };
+            this.setState({
+                random_array: next_array,
+            });
+            this.start_num = this.start_num + 1;
+        } else {
+            console.log("false");
+        }
     };
     componentDidMount() {
         this.handleMakeRandom();
     }
     render() {
-        const { next_number } = this.state;
-        const { handleMakeRandom } = this;
+        const { random_array } = this.state;
+        const { handleMakeRandom, handleClick } = this;
         return (
             <Template
-                tileList={<TileList next_number={next_number} />}
+                tileList={
+                    <TileList array={random_array} onClick={handleClick} />
+                }
                 button={<Button onCreate={handleMakeRandom} />}
             ></Template>
         );
