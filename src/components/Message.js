@@ -8,11 +8,11 @@ const textStyle = {
 };
 
 class Message extends Component {
-    componentDidUpdate() {
-        console.log("object");
-    }
     game_state = () => {
-        const { current_num, target_num, max } = this.props;
+        const { current_num, target_num, max, status } = this.props;
+        if (status === "ready") {
+            return <div style={textStyle}>Ready!</div>;
+        }
         if (current_num - 1 === max) {
             return <div style={textStyle}>clear</div>;
         } else if (current_num - 1 !== target_num) {
@@ -26,7 +26,6 @@ class Message extends Component {
     render() {
         return (
             <div>
-                <p>타ㅓ임</p>
                 <div>{this.game_state()}</div>
             </div>
         );

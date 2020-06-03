@@ -1,7 +1,8 @@
 .tile_list {
     overflow: hidden;
     border-bottom: 1px solid #333;
-    background-color: gray
+    background-color: gray;
+    /* display: none; */
 }
 
 .tile_list>.tile {
@@ -26,6 +27,8 @@
     line-height: 20vw;
     box-sizing: border-box;
     cursor: pointer;
+    font-size: 10vw;
+    font-weight: bold;
 }
 
 div {
