@@ -6,7 +6,7 @@ import Message from "./components/Message";
 import Timer from "./components/Timer";
 
 class App extends Component {
-    max = 25;
+    max = 5;
     state = {
         status: "ready",
         next_num: this.max,
@@ -67,8 +67,8 @@ class App extends Component {
         this.startTimer();
 
         if (current_num == next_num) {
-            //this.setState({ finish: true });
             this.endTimer();
+            this.setState({ status: "finish" });
         }
     };
 
