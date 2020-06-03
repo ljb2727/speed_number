@@ -34,13 +34,7 @@ class App extends Component {
         this.endTimer();
     };
     handleClick = (t) => {
-        const {
-            random_array,
-            target_num,
-            current_num,
-            next_num,
-            status,
-        } = this.state;
+        const { random_array, current_num, next_num, status } = this.state;
         if (status === "ready") {
             return false;
         }
