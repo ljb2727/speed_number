@@ -5,6 +5,7 @@ import Button from "./components/Button";
 import Message from "./components/Message";
 import Timer from "./components/Timer";
 import Record from "./components/Record";
+import "./App.css";
 
 class App extends Component {
     max = 25;
@@ -108,7 +109,7 @@ class App extends Component {
         const bestTime =
             copy2[
                 copy2.findIndex(
-                    (e) => e.time == Math.min(...copy2.map((e) => e.time))
+                    (e) => e.time === Math.min(...copy2.map((e) => e.time))
                 )
             ];
         this.setState({ bestTime: bestTime });
