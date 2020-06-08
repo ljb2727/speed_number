@@ -38,3 +38,12 @@ div {
     -webkit-user-select: none;
     user-select: none;
 }
+
+.record * {
+    margin: 0;
+    padding: 0
+}
+
+.record ul {}
+
+.record ul li {}

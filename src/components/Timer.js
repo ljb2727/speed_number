@@ -1,16 +1,19 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 
 class Timer extends Component {
     render() {
-        const { onClick, strikes, status } = this.props;
+        const { onClick, onChange, strikes, status, name } = this.props;
         return (
-            <div>
+            <Fragment>
                 {status === "ready" ? (
-                    <button onClick={onClick}>start</button>
+                    <div>
+                        <input type="text" value={name} onChange={onChange} />
+                        <button onClick={onClick}>start</button>
+                    </div>
                 ) : (
-                    <div>{strikes}ms</div>
+                    <div>{strikes / 1000}초</div>
                 )}
-            </div>
+            </Fragment>
         );
     }
 }

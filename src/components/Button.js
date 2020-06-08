@@ -1,16 +1,27 @@
-import React, { Component } from "react";
+import React from "react";
 
-const Button = ({ onCreate }) => {
+const Button = ({ onCreate, status, onReset }) => {
     return (
-        <div>
-            <button
-                onClick={() => {
-                    onCreate();
-                }}
-            >
-                resset
-            </button>
-        </div>
+        <React.Fragment>
+            {status === "finish" && (
+                <div>
+                    <button
+                        onClick={() => {
+                            onCreate();
+                        }}
+                    >
+                        재시작
+                    </button>
+                    <button
+                        onClick={() => {
+                            onReset();
+                        }}
+                    >
+                        초기화
+                    </button>
+                </div>
+            )}
+        </React.Fragment>
     );
 };
 export default Button;

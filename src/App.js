@@ -4,9 +4,10 @@ import TileList from "./components/TileList";
 import Button from "./components/Button";
 import Message from "./components/Message";
 import Timer from "./components/Timer";
+import Record from "./components/Record";
 
 class App extends Component {
-    max = 5;
+    max = 1;
     state = {
         status: "ready",
         next_num: this.max,
@@ -16,6 +17,7 @@ class App extends Component {
         strikes: 0,
         timer: false,
         record: [],
+        name: "",
     };
     handleMakeRandom = () => {
         this.setState({
@@ -34,14 +36,19 @@ class App extends Component {
         this.endTimer();
     };
     handleClick = (t) => {
-        const { random_array, current_num, next_num, status } = this.state;
-        if (status === "ready") {
+        const {
+            random_array,
+            current_num,
+            next_num,
+            status,
+            strikes,
+        } = this.state;
+        if (status !== "ing") {
             return false;
         }
         this.setState({ target_num: t });
-        if (current_num == t) {
-            console.log("true");
-            const index = random_array.findIndex((i) => i.id == t);
+        if (current_num === t) {
+            const index = random_array.findIndex((i) => i.id === t);
             const selected = random_array[index];
             const next_array = [...random_array];
 
@@ -60,9 +67,11 @@ class App extends Component {
         //타일 클릭시 무조건 시작
         this.startTimer();
 
-        if (current_num == next_num) {
+        //게임 클리어시
+        if (current_num === next_num) {
             this.endTimer();
             this.setState({ status: "finish" });
+            this.record(strikes);
         }
     };
 
@@ -72,7 +81,14 @@ class App extends Component {
             strikes: this.state.strikes + 10,
         });
     };
+    changeName = (e) => {
+        this.setState({ name: e.target.value });
+    };
     startTimer = () => {
+        if (!this.state.name) {
+            alert("이름을 입력해주세요.");
+            return false;
+        }
         if (!this.state.timer) {
             this._interval = setInterval(this.timerTick, 10);
             this.setState({ timer: true, status: "ing" });
@@ -83,10 +99,26 @@ class App extends Component {
         clearInterval(this._interval);
         this.setState({ timer: false });
     };
+    record = (time) => {
+        const { name } = this.state;
+        const copy = [...this.state.record];
+        const copy2 = copy.concat({ time: time, name: name });
+        this.setState({ record: copy2 });
+    };
+
+    handleRestart = () => {
+        this.handleMakeRandom();
+        this.startTimer();
+    };
+
+    handleReset = () => {
+        this.handleMakeRandom();
+    };
 
     componentDidMount() {
         this.handleMakeRandom();
     }
+
     render() {
         const {
             random_array,
@@ -94,8 +126,16 @@ class App extends Component {
             current_num,
             strikes,
             status,
+            record,
+            name,
         } = this.state;
-        const { handleMakeRandom, handleClick, startTimer } = this;
+        const {
+            handleRestart,
+            handleClick,
+            startTimer,
+            changeName,
+            handleReset,
+        } = this;
         return (
             <Template
                 tileList={
@@ -105,7 +145,13 @@ class App extends Component {
                         status={status}
                     />
                 }
-                button={<Button onCreate={handleMakeRandom} />}
+                button={
+                    <Button
+                        onCreate={handleRestart}
+                        onReset={handleReset}
+                        status={status}
+                    />
+                }
                 message={
                     <Message
                         target_num={target_num}
@@ -117,10 +163,13 @@ class App extends Component {
                 timer={
                     <Timer
                         onClick={startTimer}
+                        onChange={changeName}
                         strikes={strikes}
                         status={status}
+                        name={name}
                     />
                 }
+                record={<Record record={record} />}
             ></Template>
         );
     }
