@@ -7,7 +7,7 @@ import Timer from "./components/Timer";
 import Record from "./components/Record";
 
 class App extends Component {
-    max = 1;
+    max = 25;
     state = {
         status: "ready",
         next_num: this.max,
@@ -18,6 +18,7 @@ class App extends Component {
         timer: false,
         record: [],
         name: "",
+        bestTime: null,
     };
     handleMakeRandom = () => {
         this.setState({
@@ -104,6 +105,13 @@ class App extends Component {
         const copy = [...this.state.record];
         const copy2 = copy.concat({ time: time, name: name });
         this.setState({ record: copy2 });
+        const bestTime =
+            copy2[
+                copy2.findIndex(
+                    (e) => e.time == Math.min(...copy2.map((e) => e.time))
+                )
+            ];
+        this.setState({ bestTime: bestTime });
     };
 
     handleRestart = () => {
@@ -128,6 +136,7 @@ class App extends Component {
             status,
             record,
             name,
+            bestTime,
         } = this.state;
         const {
             handleRestart,
@@ -169,7 +178,7 @@ class App extends Component {
                         name={name}
                     />
                 }
-                record={<Record record={record} />}
+                record={<Record record={record} bestTime={bestTime} />}
             ></Template>
         );
     }
